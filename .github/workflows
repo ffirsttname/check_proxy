@@ -1,0 +1,28 @@
+name: Proxy Checker
+
+on:
+  workflow_dispatch:
+
+jobs:
+  check-proxy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Run proxy checker
+        run: python proxy_checker.py
+
+      - name: Upload proxy result
+        uses: actions/upload-artifact@v4
+        with:
+          name: proxy-result
+          path: proxy_result.json
